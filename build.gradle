@@ -1,0 +1,43 @@
+repositories {
+    jcenter()
+    mavenLocal()
+}
+
+buildscript {
+    repositories {
+        mavenLocal()
+        jcenter()
+    }
+    dependencies {
+        classpath("net.serenity-bdd:serenity-gradle-plugin:1.9.45")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'net.serenity-bdd.aggregator'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    compile 'net.serenity-bdd:serenity-rest-assured:1.9.45'
+    compile 'net.serenity-bdd:serenity-core:1.9.45'
+    compile 'net.serenity-bdd:serenity-junit:1.9.45'
+    compile 'net.serenity-bdd:serenity-cucumber:1.9.14'
+    compile 'org.json:json:20180813'
+    compile 'org.influxdb:influxdb-java:2.5'
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+    compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
+}
+
+// Allow build to continue on test failure
+gradle.startParameter.continueOnFailure = true
+
+test {
+    systemProperties System.getProperties()
+    testLogging.showStandardStreams = true
+    // turn off html reports... windows can't handle certain cucumber test name characters.
+    test.reports.getHtml().enabled = false
+    test.reports.junitXml.enabled= false
+    include 'com/adidas/serenityRunner/TestRunner.class'
+}
