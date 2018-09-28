@@ -13,7 +13,7 @@ import java.net.InetAddress;
  */
 @RunWith(CucumberWithSerenity.class)
 @CucumberOptions(
-        features = {"src/test/resources/features"},
+        features = {"src/test/resources/features/PetStore.feature"},
 //        plugin = { "pretty", "html:target/cucumber", "json:target/cucumber-report.json"},
         glue = {"com.adidas.gherkinDefinitions"}
 )

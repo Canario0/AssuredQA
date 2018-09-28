@@ -4,6 +4,8 @@ import io.restassured.response.Response;
 import org.apache.commons.io.IOUtils;
 import io.restassured.specification.RequestSpecification;
 import org.json.JSONObject;
+
+import java.io.IOException;
 import java.io.InputStream;
 
 public class ServicesSupport{
@@ -13,7 +15,7 @@ public class ServicesSupport{
      * @param is Input Stream to be converted (a JSON file in the project)
      * @return JSON object
      * */
-    public JSONObject jsonInputStreamToJsonObject(InputStream is) throws Exception {
+    public JSONObject jsonInputStreamToJsonObject(InputStream is) throws IOException {
         
         JSONObject json;
         String jsonTxt = IOUtils.toString(is, "UTF-8");

@@ -52,10 +52,10 @@ public class ExampleDefinitions {
         exampleSteps.createUser();
     }
 
-    @Then("I should get (.*) status code")
-    public void iShouldGetStatusCode(int expectedStatusCode) {
-        exampleSteps.verifyStatusCode(expectedStatusCode);
-    }
+//    @Then("I should get (.*) status code")
+//    public void iShouldGetStatusCode(int expectedStatusCode) {
+//        exampleSteps.verifyStatusCode(expectedStatusCode);
+//    }
 
     @And("^The value for the \"([^\"]*)\" after (get|post|update|delete) operation should be \"([^\"]*)\"$")
     public void theValueForTheAfterGetOperationShouldBe(String key, String operation, String expectedValue) {

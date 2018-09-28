@@ -25,7 +25,6 @@ dependencies {
     compile 'net.serenity-bdd:serenity-junit:1.9.45'
     compile 'net.serenity-bdd:serenity-cucumber:1.9.14'
     compile 'org.json:json:20180813'
-    compile 'org.influxdb:influxdb-java:2.5'
     compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
     compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
 }
