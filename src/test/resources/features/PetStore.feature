@@ -1,6 +1,6 @@
+@ALL
 Feature: User Cases of the Pet Store Example
 
-  @ALL
   @JSON
   @POST
   Scenario Outline: POST a new pet for the store
@@ -14,7 +14,6 @@ Feature: User Cases of the Pet Store Example
       | Content-Type | application/json | 400                |
       | Content-Type | application/json | 500                |
 
-  @ALL
   @JSON
   @GET
   Scenario Outline: Get all pets with given status
@@ -29,7 +28,6 @@ Feature: User Cases of the Pet Store Example
       | Content-Type | application/json | pending     | 200                |
 
 
-  @ALL
   @XML
   @POST
   Scenario Outline: POST a new pet for the store
@@ -41,4 +39,16 @@ Feature: User Cases of the Pet Store Example
       | field        | value           | expectedStatusCode |
       | Content-Type | application/xml | 200                |
       | Content-Type | application/xml | 400                |
-#      | Content-Type | application/xml | 500                |
+
+  @XML
+  @GET
+  Scenario Outline: Get all pets with given status
+    When I request to do a get operation with "<field>" to "<value>"
+    And find all the pets with status "<statusValue>"
+    Then I should get <expectedStatusCode> status code
+#    And is not empty
+    Examples:
+      | field        | value           | statusValue | expectedStatusCode |
+      | Content-Type | application/xml | available   | 200                |
+      | Content-Type | application/xml | sold        | 200                |
+      | Content-Type | application/xml | pending     | 200                |
