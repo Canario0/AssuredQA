@@ -15,7 +15,8 @@ import java.net.InetAddress;
 @CucumberOptions(
         features = {"src/test/resources/features/PetStore.feature"},
 //        plugin = { "pretty", "html:target/cucumber", "json:target/cucumber-report.json"},
-        glue = {"com.adidas.gherkinDefinitions"}
+        glue = {"com.adidas.gherkinDefinitions"},
+        tags = {"@GET"}
 )
 
 public class TestRunner {

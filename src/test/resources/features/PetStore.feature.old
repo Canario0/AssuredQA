@@ -1,0 +1,53 @@
+Feature: User Cases of the Pet Store Example
+
+#  @JSON
+  Scenario Outline: POST a new pet for the store
+    When I request to do post operation with "<field>" to "<value>"
+    And with body:
+    """
+    {
+  "id": 5000,
+  "category": {
+    "id": 4,
+    "name": "Labrador"
+  },
+  "name": "Pikotaro",
+  "photoUrls": [
+    "http://www.cutestpaw.com/wp-content/uploads/2016/01/s-Waterproof-home..jpg"
+  ],
+  "tags": [
+    {
+      "id": 500,
+      "name": "string"
+    }
+  ],
+  "status": "pending"
+}
+    """
+    Then I should get <expectedStatusCode> status code
+    And response body equals to:
+      """
+    {
+  "id": 5000,
+  "category": {
+    "id": 4,
+    "name": "Labrador"
+  },
+  "name": "Pikotaro",
+  "photoUrls": [
+    "http://www.cutestpaw.com/wp-content/uploads/2016/01/s-Waterproof-home..jpg"
+  ],
+  "tags": [
+    {
+      "id": 500,
+      "name": "string"
+    }
+  ],
+  "status": "pending"
+}
+    """
+    Examples:
+      | field        | value            | expectedStatusCode |
+      | Content-Type | application/json | 200                |
+
+#    @XML

@@ -15,12 +15,11 @@ public class ServicesSupport{
      * @param is Input Stream to be converted (a JSON file in the project)
      * @return JSON object
      * */
-    public JSONObject jsonInputStreamToJsonObject(InputStream is) throws IOException {
+    public String jsonInputStreamToJsonObject(InputStream is) throws IOException {
         
         JSONObject json;
-        String jsonTxt = IOUtils.toString(is, "UTF-8");
-        json = new JSONObject(jsonTxt);
-        return json;
+        String jsonText = IOUtils.toString(is, "UTF-8");
+        return jsonText;
     }
 
     /**

@@ -14,17 +14,20 @@ public class PetStoreDefinitions {
     @Steps
     private PetStoreSteps restSteps;
 
+    /*
+                                  POST
+     */
+
     @When("^I request to do post operation with \"([^\"]*)\" to \"([^\"]*)\"$")
     public void iRequestToDoPutWithTo(String headerField, String headerValue) {
         // Write code here that turns the phrase above into concrete actions
         restSteps.setHeaderContentType(headerField, headerValue);
     }
 
-
-    @And("^with body \"([^\"]*)\" including$")
-    public void withBodyIncluding(String bodyPath, Map<String, String> values) {
+    @And("^with body \"([^\"]*)\"$")
+    public void withBodyIncluding(String jsonBodyFile) {
         // Write code here that turns the phrase above into concrete actions
-        restSteps.bodyModify(bodyPath, values);
+        restSteps.bodySend(jsonBodyFile);
     }
 
     @Then("^I should get (\\d+) status code$")
@@ -33,21 +36,32 @@ public class PetStoreDefinitions {
         restSteps.verifyStatusCode(statusCode);
     }
 
-    @And("^response body contains$")
-    public void responseBodyContains(Map<String, String> values) {
+    @And("^response body equals to \"([^\"]*)\"$")
+    public void responseBodyContains(String expectedJsonBody) {
         // Write code here that turns the phrase above into concrete actions
-        restSteps.verifyBody(values);
+        restSteps.verifyBody(expectedJsonBody.replace("\n", ""));
     }
 
+    /*
+                                GET
+     */
 
-//    @When("^I request to do post operation with \"([^\"]*)\" to \"([^\"]*)\"$")
-//    public void iRequestToDoPutOperationWithTo(String arg0, String arg1) throws Throwable {
-//        // Write code here that turns the phrase above into concrete actions
-//        throw new PendingException();
+    @When("^I request to do a get operation with \"([^\"]*)\" to \"([^\"]*)\"$")
+    public void iRequestToDoAGetOperationWithTo(String headerField, String headerValue) {
+        restSteps.setHeaderContentType(headerField, headerValue);
+    }
+
+    @And("^find all the pets with status \"([^\"]*)\"$")
+    public void findAllThePetsWithStatus(String statusValue) {
+        restSteps.findByStatus(statusValue);
+    }
+
+//    @And("^is not empty$")
+//    public void isNotEmpty(){
 //    }
-//
-//    @When("^I request to do post operation with \"([^\"]*)\" to \"([^\"]*)\"$")
-//    public void iRequestToDoPostOperationWithTo(String arg0, String arg1) throws Throwable {
+
+//    @And("^is not empty$")
+//    public void isNotEmpty() throws Throwable {
 //        // Write code here that turns the phrase above into concrete actions
 //        throw new PendingException();
 //    }

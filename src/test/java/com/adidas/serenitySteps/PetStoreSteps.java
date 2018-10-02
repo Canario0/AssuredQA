@@ -5,13 +5,10 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import net.serenitybdd.core.Serenity;
 import net.thucydides.core.annotations.Step;
-import net.thucydides.core.annotations.Steps;
-import org.json.JSONObject;
 import org.junit.Assert;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 import static net.serenitybdd.rest.SerenityRest.rest;
@@ -28,24 +25,28 @@ public class PetStoreSteps {
         switch (field) {
             case "Content-Type":
                 spec.when().contentType(value);
+                if(value.equals("application/xml"))
+                    spec.accept(value);
                 break;
             default:
                 break;
         }
     }
 
-    @Step("And with body \"requests/put_pet.json\" including")
-    public void bodyModify(String bodyPath, Map<String, String> values) {
-        try {
+    @Step("And with body \"/requests/post/json/post_pet_<expectedStatusCode>.(json|xml)\"")
+    public void bodySend(String jsonBodyFile) {
 
-            InputStream is = this.getClass().getResourceAsStream(bodyPath);
-            JSONObject body = servicesSupport.jsonInputStreamToJsonObject(is);
-            values.forEach((key, val) ->
-                    body.put(key, val)
-            );
-            spec = spec.body(body.toMap());
+        try {
+            InputStream is = this.getClass().getResourceAsStream(jsonBodyFile);
+            String body = servicesSupport.jsonInputStreamToJsonObject(is);
+//            values.forEach((key, val) ->
+//                    body.put(key, val)
+//            );
+
+            spec = spec.body(body);
             Response response = servicesSupport.executeRequest(spec, "POST", endpoint + config.getString("USERS"));
             Serenity.setSessionVariable("response").to(response);
+//            Serenity.setSessionVariable("body").to(body);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -57,13 +58,29 @@ public class PetStoreSteps {
         Assert.assertEquals("status code doesn't match", expectedStatusCode, res.getStatusCode());
     }
 
-    @Step(" And response body contains")
-    public void verifyBody(Map<String, String> values) {
-        Response res = Serenity.sessionVariableCalled("response");
-        values.forEach((key, val) ->
-                verifyValueFromKey(res, "POST", key, val)
-        );
+    @Step("And response body equals to \"/requests/post/json/expected_post_pet_<expectedStatusCode>.(json|xml)\"")
+    public void verifyBody(String expectedJsonBodyFile) {
+        try {
+            Response res = Serenity.sessionVariableCalled("response");
+            InputStream is = this.getClass().getResourceAsStream(expectedJsonBodyFile);
+            String body = servicesSupport.jsonInputStreamToJsonObject(is);
+            Assert.assertEquals("The body " + format(body) + " doesn't match with " + format(res.getBody().print()), format(res.getBody().print()), format(body));
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
+
+    private String format(String input){
+        return input.replace("\n", "").replace("\r", "").replace(" ", "");
+    }
+
+    @Step("And find all the pets with status \"<statusValue>\"")
+    public void findByStatus(String statusValue){
+        Response response = servicesSupport.executeRequest(spec, "GET", endpoint + config.getString("USERS")+ String.format("/findByStatus?status=%s",statusValue));
+        Serenity.setSessionVariable("response").to(response);
+    }
+
+//    public void
 
 //    @Step
 //    public void createUser() {

@@ -1,0 +1,18 @@
+{
+  "id": 5000,
+  "category": {
+    "id": 4,
+    "name": "Labrador"
+  },
+  "name": "Pikotaro",
+  "photoUrls": [
+    "http://www.cutestpaw.com/wp-content/uploads/2016/01/s-Waterproof-home..jpg"
+  ],
+  "tags": [
+    {
+      "id": 500,
+      "name": "string"
+    }
+  ],
+  "status": "pending"
+}
