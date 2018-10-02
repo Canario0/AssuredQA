@@ -18,35 +18,4 @@ import org.junit.runner.RunWith;
 
 public class TestRunner {
 
-    /**
-     * Sets proxy configuration if the property -DuseProxy is added to Gradle test task
-     * */
-//    @BeforeClass
-//    public static void setProxy(){
-//
-//        if (System.getProperty("useProxy") != null) {
-//            String proxyAlten = "192.168.10.53";
-//            String proxyAdidas = "10.127.254.16";
-//            String proxyPort = "8080";
-//            String ip = "";
-//            try (final DatagramSocket socket = new DatagramSocket()) {
-//                socket.connect(InetAddress.getByName("8.8.8.8"), 10002);
-//                ip = socket.getLocalAddress().getHostAddress();
-//            } catch (Exception e) {
-//                e.getStackTrace();
-//            }
-//            if (ip.contains("192.168.10")) {
-//                System.setProperty("http.proxyHost", proxyAlten);
-//                System.setProperty("http.proxyPort", proxyPort);
-//                System.setProperty("https.proxyHost", proxyAlten);
-//                System.setProperty("https.proxyPort", proxyPort);
-//            } else if (ip.contains("10.129")) {
-//                System.setProperty("http.proxyHost", proxyAdidas);
-//                System.setProperty("http.proxyPort", proxyPort);
-//                System.setProperty("https.proxyHost", proxyAdidas);
-//                System.setProperty("https.proxyPort", proxyPort);
-//            }
-//        }
-//    }
-
 }
