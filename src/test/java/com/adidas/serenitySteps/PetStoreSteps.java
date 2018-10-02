@@ -21,11 +21,13 @@ public class PetStoreSteps {
     private RequestSpecification spec = rest().baseUri(endpoint);
 
     @Step("When I request to do put operation with \"<field>\"  to \"<value>\"")
-    public void setHeaderContentType(String field, String value) {
+    public void setHeaderContentType(String method,String field, String value) {
+
+        Serenity.setSessionVariable("method").to(method);
         switch (field) {
             case "Content-Type":
                 spec.when().contentType(value);
-                if(value.equals("application/xml"))
+                if (value.equals("application/xml"))
                     spec.accept(value);
                 break;
             default:
@@ -44,7 +46,7 @@ public class PetStoreSteps {
 //            );
 
             spec = spec.body(body);
-            Response response = servicesSupport.executeRequest(spec, "POST", endpoint + config.getString("USERS"));
+            Response response = servicesSupport.executeRequest(spec, Serenity.sessionVariableCalled("method"), endpoint + config.getString("USERS"));
             Serenity.setSessionVariable("response").to(response);
 //            Serenity.setSessionVariable("body").to(body);
         } catch (IOException e) {
@@ -65,18 +67,18 @@ public class PetStoreSteps {
             InputStream is = this.getClass().getResourceAsStream(expectedJsonBodyFile);
             String body = servicesSupport.jsonInputStreamToJsonObject(is);
             Assert.assertEquals("The body " + format(body) + " doesn't match with " + format(res.getBody().print()), format(res.getBody().print()), format(body));
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private String format(String input){
+    private String format(String input) {
         return input.replace("\n", "").replace("\r", "").replace(" ", "");
     }
 
     @Step("And find all the pets with status \"<statusValue>\"")
-    public void findByStatus(String statusValue){
-        Response response = servicesSupport.executeRequest(spec, "GET", endpoint + config.getString("USERS")+ String.format("/findByStatus?status=%s",statusValue));
+    public void findByStatus(String statusValue) {
+        Response response = servicesSupport.executeRequest(spec, Serenity.sessionVariableCalled("method"), endpoint + config.getString("USERS") + String.format("/findByStatus?status=%s", statusValue));
         Serenity.setSessionVariable("response").to(response);
     }
 
@@ -167,5 +169,20 @@ public class PetStoreSteps {
         }
 
         Assert.assertEquals("Value for " + key + " doesn't match", expectedValue, currentValue);
+    }
+
+    @Step("And is not empty")
+    public void isNotEmpty() {
+        Response res = Serenity.sessionVariableCalled("response");
+        if (res.getContentType().equals("application/json"))
+            Assert.assertTrue("The response is empty", res.jsonPath().getList("").size() > 0);
+        else
+            Assert.assertTrue("The response is empty", res.xmlPath().getList("pets").size() > 0);
+    }
+
+    @Step
+    public void deleteById(String id) {
+        Response response = servicesSupport.executeRequest(spec, Serenity.sessionVariableCalled("method"), endpoint + config.getString("USERS") + String.format("/%s", id));
+        Serenity.setSessionVariable("response").to(response);
     }
 }

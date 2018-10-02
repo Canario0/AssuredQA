@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<apiResponse>
+    <message>javax.xml.bind.UnmarshalException
+        - with linked exception:
+        [org.xml.sax.SAXParseException; lineNumber: 19; columnNumber: 3; The element type &quot;id&quot; must be terminated by the matching end-tag &quot;&lt;/id&gt;&quot;.]</message>
+    <type>unknown</type>
+</apiResponse>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Pet>
+    <id>800000</id>
+    <Category>
+        <id>5</id>
+        <name>Labrador</name>
+    </Category>
+    <name>Pikotaroa</name>
+    <photoUrl>
+        <photoUrl>string</photoUrl>
+    </photoUrl>
+    <tag>
+        <Tag>
+            <id>600</id>
+            <name>jadfjla</name>
+        </Tag>
+    </tag>
+    <status>available</status>
+</Pet>

@@ -18,10 +18,10 @@ public class PetStoreDefinitions {
                                   POST
      */
 
-    @When("^I request to do post operation with \"([^\"]*)\" to \"([^\"]*)\"$")
-    public void iRequestToDoPutWithTo(String headerField, String headerValue) {
+    @When("^I request to do (POST|GET|DELETE|PUT) operation with \"([^\"]*)\" to \"([^\"]*)\"$")
+    public void iRequestToDoPutWithTo(String method, String headerField, String headerValue) {
         // Write code here that turns the phrase above into concrete actions
-        restSteps.setHeaderContentType(headerField, headerValue);
+        restSteps.setHeaderContentType(method,headerField, headerValue);
     }
 
     @And("^with body \"([^\"]*)\"$")
@@ -46,23 +46,33 @@ public class PetStoreDefinitions {
                                 GET
      */
 
-    @When("^I request to do a get operation with \"([^\"]*)\" to \"([^\"]*)\"$")
-    public void iRequestToDoAGetOperationWithTo(String headerField, String headerValue) {
-        restSteps.setHeaderContentType(headerField, headerValue);
-    }
+//    @When("^I request to do a get operation with \"([^\"]*)\" to \"([^\"]*)\"$")
+//    public void iRequestToDoAGetOperationWithTo(String headerField, String headerValue) {
+//        restSteps.setHeaderContentType("GET",headerField, headerValue);
+//    }
 
     @And("^find all the pets with status \"([^\"]*)\"$")
     public void findAllThePetsWithStatus(String statusValue) {
         restSteps.findByStatus(statusValue);
     }
 
-//    @And("^is not empty$")
-//    public void isNotEmpty(){
+    @And("^is not empty$")
+    public void isNotEmpty(){
+        restSteps.isNotEmpty();
+    }
+
+    @And("^delete pet with id equal to \"([^\"]*)\"$")
+    public void deletePetWithIdEqualTo(String id) {
+        restSteps.deleteById(id);
+    }
+
+//    @When("^I request to do PUT operation with \"([^\"]*)\" to \"([^\"]*)\"$")
+//    public void iRequestToDoPUTOperationWithTo(String headerField, String headerValue) {
+//        restSteps.setHeaderContentType("PUT",headerField, headerValue);
 //    }
 
-//    @And("^is not empty$")
-//    public void isNotEmpty() throws Throwable {
-//        // Write code here that turns the phrase above into concrete actions
-//        throw new PendingException();
+//    @When("^I request to do a DELETE operation with \"([^\"]*)\" to \"([^\"]*)\"$")
+//    public void iRequestToDoADELETEOperationWithTo(String headerField, String headerValue){
+//        restSteps.setHeaderContentType("DELETE",headerField, headerValue);
 //    }
 }

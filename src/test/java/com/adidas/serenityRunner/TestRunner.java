@@ -13,7 +13,7 @@ import org.junit.runner.RunWith;
         features = {"src/test/resources/features/PetStore.feature"},
 //        plugin = { "pretty", "html:target/cucumber", "json:target/cucumber-report.json"},
         glue = {"com.adidas.gherkinDefinitions"},
-        tags = {"@XML" , "@GET"}
+        tags = {"@PUT"}
 )
 
 public class TestRunner {
