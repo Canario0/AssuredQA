@@ -1,4 +1,4 @@
-@ALL
+@ALL @PET
 Feature: User Cases of the Pet Store Example
 
   @JSON
@@ -29,7 +29,7 @@ Feature: User Cases of the Pet Store Example
 
   @JSON
   @GET
-  Scenario Outline: Get all pets with given id
+  Scenario Outline: Get all pets with given status
     When I request to do GET operation with "<field>" to "<value>"
     And find all the pets with status "<statusValue>"
     Then I should get <expectedStatusCode> status code

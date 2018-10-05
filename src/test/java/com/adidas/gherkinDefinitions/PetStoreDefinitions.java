@@ -66,6 +66,18 @@ public class PetStoreDefinitions {
         restSteps.deleteById(id);
     }
 
+    @And("^with path \"([^\"]*)\"$")
+    public void withPath(String path) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        restSteps.getInventory(path);
+    }
+
+    @And("^response contains \"([^\"]*)\"$")
+    public void responseContains(String key){
+        // Write code here that turns the phrase above into concrete actions
+        restSteps.containsKey(key);
+    }
+
 //    @When("^I request to do PUT operation with \"([^\"]*)\" to \"([^\"]*)\"$")
 //    public void iRequestToDoPUTOperationWithTo(String headerField, String headerValue) {
 //        restSteps.setHeaderContentType("PUT",headerField, headerValue);

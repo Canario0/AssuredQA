@@ -1,14 +1,17 @@
 package com.adidas.serenitySteps;
 
 import com.adidas.support.ServicesSupport;
+import com.google.gson.JsonObject;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import net.serenitybdd.core.Serenity;
 import net.thucydides.core.annotations.Step;
+import org.json.JSONObject;
 import org.junit.Assert;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import static net.serenitybdd.rest.SerenityRest.rest;
@@ -46,7 +49,7 @@ public class PetStoreSteps {
 //            );
 
             spec = spec.body(body);
-            Response response = servicesSupport.executeRequest(spec, Serenity.sessionVariableCalled("method"), endpoint + config.getString("USERS"));
+            Response response = servicesSupport.executeRequest(spec, Serenity.sessionVariableCalled("method"), endpoint + config.getString("PET"));
             Serenity.setSessionVariable("response").to(response);
 //            Serenity.setSessionVariable("body").to(body);
         } catch (IOException e) {
@@ -78,7 +81,7 @@ public class PetStoreSteps {
 
     @Step("And find all the pets with status \"<statusValue>\"")
     public void findByStatus(String statusValue) {
-        Response response = servicesSupport.executeRequest(spec, Serenity.sessionVariableCalled("method"), endpoint + config.getString("USERS") + String.format("/findByStatus?status=%s", statusValue));
+        Response response = servicesSupport.executeRequest(spec, Serenity.sessionVariableCalled("method"), endpoint + config.getString("PET") + String.format("/findByStatus?status=%s", statusValue));
         Serenity.setSessionVariable("response").to(response);
     }
 
@@ -151,7 +154,7 @@ public class PetStoreSteps {
      * @param key           Attribute name received from the scenario as a parameter
      * @param expectedValue Expected value of the attribute received from the scenario as a parameter
      */
-    private void verifyValueFromKey(Response res, String operation, String key, String expectedValue) {
+    public void verifyValueFromKey(Response res, String operation, String key, String expectedValue) {
 
         String currentValue = "";
 
@@ -168,7 +171,7 @@ public class PetStoreSteps {
                 break;
         }
 
-        Assert.assertEquals("Value for " + key + " doesn't match", expectedValue, currentValue);
+        Assert.assertNotEquals("Value for " + key + " doesn't match", expectedValue, currentValue);
     }
 
     @Step("And is not empty")
@@ -182,7 +185,17 @@ public class PetStoreSteps {
 
     @Step
     public void deleteById(String id) {
-        Response response = servicesSupport.executeRequest(spec, Serenity.sessionVariableCalled("method"), endpoint + config.getString("USERS") + String.format("/%s", id));
+        Response response = servicesSupport.executeRequest(spec, Serenity.sessionVariableCalled("method"), endpoint + config.getString("PET") + String.format("/%s", id));
         Serenity.setSessionVariable("response").to(response);
+    }
+
+    public void getInventory(String path) {
+        Response response = servicesSupport.executeRequest(spec, Serenity.sessionVariableCalled("method"), endpoint + config.getString("STORE") + path);
+        Serenity.setSessionVariable("response").to(response);
+    }
+
+    public void containsKey(String key) {
+        Response res = Serenity.sessionVariableCalled("response");
+        Assert.assertTrue("The response does not contains any key equals to " + key,(new JSONObject((Map<?,?>) res.getBody().jsonPath().getJsonObject("$")).has(key)));
     }
 }

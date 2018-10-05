@@ -3,7 +3,6 @@ package com.adidas.support;
 import io.restassured.response.Response;
 import org.apache.commons.io.IOUtils;
 import io.restassured.specification.RequestSpecification;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,10 +15,7 @@ public class ServicesSupport{
      * @return JSON object
      * */
     public String jsonInputStreamToJsonObject(InputStream is) throws IOException {
-        
-        JSONObject json;
-        String jsonText = IOUtils.toString(is, "UTF-8");
-        return jsonText;
+        return IOUtils.toString(is, "UTF-8");
     }
 
     /**

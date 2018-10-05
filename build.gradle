@@ -13,8 +13,13 @@ buildscript {
     }
 }
 
+//plugins {
+//    id "org.sonarqube" version "2.6.2"
+//}
+
 apply plugin: 'java'
 apply plugin: 'net.serenity-bdd.aggregator'
+//apply plugin: 'org.sonarqube'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
