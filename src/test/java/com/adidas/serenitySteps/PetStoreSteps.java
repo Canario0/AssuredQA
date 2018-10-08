@@ -22,6 +22,7 @@ public class PetStoreSteps {
     private ServicesSupport servicesSupport = new ServicesSupport();
     private final String endpoint = config.getString("URI");
     private RequestSpecification spec = rest().baseUri(endpoint);
+    private String path;
 
     @Step("When I request to do put operation with \"<field>\"  to \"<value>\"")
     public void setHeaderContentType(String method,String field, String value) {
@@ -38,6 +39,11 @@ public class PetStoreSteps {
         }
     }
 
+    @Step("And with URI \"<string>\"")
+    public void setPath(String path){
+       this.path=path;
+    }
+
     @Step("And with body \"/requests/post/json/post_pet_<expectedStatusCode>.(json|xml)\"")
     public void bodySend(String jsonBodyFile) {
 
@@ -49,7 +55,7 @@ public class PetStoreSteps {
 //            );
 
             spec = spec.body(body);
-            Response response = servicesSupport.executeRequest(spec, Serenity.sessionVariableCalled("method"), endpoint + config.getString("PET"));
+            Response response = servicesSupport.executeRequest(spec, Serenity.sessionVariableCalled("method"), endpoint + path);
             Serenity.setSessionVariable("response").to(response);
 //            Serenity.setSessionVariable("body").to(body);
         } catch (IOException e) {
@@ -63,7 +69,7 @@ public class PetStoreSteps {
         Assert.assertEquals("status code doesn't match", expectedStatusCode, res.getStatusCode());
     }
 
-    @Step("And response body equals to \"/requests/post/json/expected_post_pet_<expectedStatusCode>.(json|xml)\"")
+    @Step("And response body equals to \"/requests/post/json/expected_post_(pet|order)_<expectedStatusCode>.(json|xml)\"")
     public void verifyBody(String expectedJsonBodyFile) {
         try {
             Response res = Serenity.sessionVariableCalled("response");
@@ -81,70 +87,9 @@ public class PetStoreSteps {
 
     @Step("And find all the pets with status \"<statusValue>\"")
     public void findByStatus(String statusValue) {
-        Response response = servicesSupport.executeRequest(spec, Serenity.sessionVariableCalled("method"), endpoint + config.getString("PET") + String.format("/findByStatus?status=%s", statusValue));
+        Response response = servicesSupport.executeRequest(spec, Serenity.sessionVariableCalled("method"), endpoint + path + String.format("/findByStatus?status=%s", statusValue));
         Serenity.setSessionVariable("response").to(response);
     }
-
-//    public void
-
-//    @Step
-//    public void createUser() {
-//
-//        try {
-//            InputStream is = this.getClass().getResourceAsStream("/requests/create_user.json");
-//            JSONObject body = servicesSupport.jsonInputStreamToJsonObject(is);
-//            spec = spec.body(body.toMap());
-//            Response response = servicesSupport.executeRequest(spec, "POST", endpoint);
-//            Serenity.setSessionVariable("response").to(response);
-//        } catch (Exception e) {
-//            e.getMessage();
-//        }
-//    }
-//
-//    /**
-//     * Performs a PUT operation with an ID from the scenario as a parameter
-//     *
-//     * @param id The ID of a user
-//     */
-//    @Step
-//    public void updateUserById(String id) {
-//
-//        try {
-//            InputStream is = this.getClass().getResourceAsStream("/requests/update_user.json");
-////            String endpoint = getEndpoint() + "/" + id;
-//            JSONObject body = servicesSupport.jsonInputStreamToJsonObject(is);
-//            spec = spec.body(body.toMap());
-//            Response response = servicesSupport.executeRequest(spec, "PUT", endpoint);
-//            Serenity.setSessionVariable("response").to(response);
-//        } catch (Exception e) {
-//            e.getMessage();
-//        }
-//    }
-//
-//    /**
-//     * Performs a DELETE operation with an ID provided by parameter from the scenario
-//     *
-//     * @param id The ID of a user
-//     */
-//    @Step
-//    public void deleteUserById(String id) {
-//
-////        String endpoint = getEndpoint() + "/" + id;
-//        Response response = servicesSupport.executeRequest(spec, "DELETE", endpoint);
-//        Serenity.setSessionVariable("response").to(response);
-//    }
-//
-//    /**
-//     * Method to verify an status code received from the scenario
-//     *
-//     * @param expectedStatusCode Expected status code in the response
-//     */
-//    @Step
-//    public void verifyStatusCode(int expectedStatusCode) {
-//
-//        Response res = Serenity.sessionVariableCalled("response");
-//        Assert.assertEquals("status code doesn't match", expectedStatusCode, res.getStatusCode());
-//    }
 
     /**
      * Method to verify an status code received from the scenario
@@ -185,12 +130,12 @@ public class PetStoreSteps {
 
     @Step
     public void deleteById(String id) {
-        Response response = servicesSupport.executeRequest(spec, Serenity.sessionVariableCalled("method"), endpoint + config.getString("PET") + String.format("/%s", id));
+        Response response = servicesSupport.executeRequest(spec, Serenity.sessionVariableCalled("method"), endpoint + path + String.format("/%s", id));
         Serenity.setSessionVariable("response").to(response);
     }
 
     public void getInventory(String path) {
-        Response response = servicesSupport.executeRequest(spec, Serenity.sessionVariableCalled("method"), endpoint + config.getString("STORE") + path);
+        Response response = servicesSupport.executeRequest(spec, Serenity.sessionVariableCalled("method"), endpoint + this.path + path);
         Serenity.setSessionVariable("response").to(response);
     }
 

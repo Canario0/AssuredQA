@@ -1,10 +1,10 @@
 @ALL @PET
 Feature: User Cases of the Pet Store Example
 
-  @JSON
-  @POST
+  @JSON @POST
   Scenario Outline: POST a new pet for the store
     When I request to do POST operation with "<field>" to "<value>"
+    And with URI "/pet"
     And with body "/requests/post/json/post_pet_<expectedStatusCode>.json"
     Then I should get <expectedStatusCode> status code
     And response body equals to "/requests/post/json/expected_post_pet_<expectedStatusCode>.json"
@@ -14,10 +14,10 @@ Feature: User Cases of the Pet Store Example
       | Content-Type | application/json | 400                |
       | Content-Type | application/json | 500                |
 
-  @JSON
-  @PUT
+  @JSON @PUT
   Scenario Outline: PUT a new pet for the store
     When I request to do PUT operation with "<field>" to "<value>"
+    And with URI "/pet"
     And with body "/requests/post/json/post_pet_<expectedStatusCode>.json"
     Then I should get <expectedStatusCode> status code
     And response body equals to "/requests/post/json/expected_post_pet_<expectedStatusCode>.json"
@@ -27,10 +27,10 @@ Feature: User Cases of the Pet Store Example
       | Content-Type | application/json | 400                |
       | Content-Type | application/json | 500                |
 
-  @JSON
-  @GET
+  @JSON @GET
   Scenario Outline: Get all pets with given status
     When I request to do GET operation with "<field>" to "<value>"
+    And with URI "/pet"
     And find all the pets with status "<statusValue>"
     Then I should get <expectedStatusCode> status code
     And is not empty
@@ -40,10 +40,10 @@ Feature: User Cases of the Pet Store Example
       | Content-Type | application/json | sold        | 200                |
       | Content-Type | application/json | pending     | 200                |
 
-  @JSON
-  @DELETE
+  @JSON @DELETE
   Scenario Outline: Delete pet with given id
     When I request to do DELETE operation with "<field>" to "<value>"
+    And with URI "/pet"
     And delete pet with id equal to "<idValue>"
     Then I should get <expectedStatusCode> status code
     Examples:
@@ -53,10 +53,10 @@ Feature: User Cases of the Pet Store Example
       | Content-Type | application/json | a       | 404                |
 
 
-  @XML
-  @POST
+  @XML @POST
   Scenario Outline: POST a new pet for the store
     When I request to do POST operation with "<field>" to "<value>"
+    And with URI "/pet"
     And with body "/requests/post/xml/post_pet_<expectedStatusCode>.xml"
     Then I should get <expectedStatusCode> status code
     And response body equals to "/requests/post/xml/expected_post_pet_<expectedStatusCode>.xml"
@@ -65,10 +65,10 @@ Feature: User Cases of the Pet Store Example
       | Content-Type | application/xml | 200                |
       | Content-Type | application/xml | 400                |
 
-  @XML
-  @PUT
+  @XML @PUT
   Scenario Outline: PUT a new pet for the store
     When I request to do PUT operation with "<field>" to "<value>"
+    And with URI "/pet"
     And with body "/requests/post/xml/put_pet_<expectedStatusCode>.xml"
     Then I should get <expectedStatusCode> status code
     And response body equals to "/requests/post/xml/expected_put_pet_<expectedStatusCode>.xml"
@@ -77,10 +77,10 @@ Feature: User Cases of the Pet Store Example
       | Content-Type | application/xml | 200                |
       | Content-Type | application/xml | 400                |
 
-  @XML
-  @GET
+  @XML @GET
   Scenario Outline: Get all pets with given status
     When I request to do GET operation with "<field>" to "<value>"
+    And with URI "/pet"
     And find all the pets with status "<statusValue>"
     Then I should get <expectedStatusCode> status code
     And is not empty
@@ -90,10 +90,10 @@ Feature: User Cases of the Pet Store Example
       | Content-Type | application/xml | sold        | 200                |
       | Content-Type | application/xml | pending     | 200                |
 
-  @XML
-  @DELETE
+  @XML @DELETE
   Scenario Outline: Delete pet with given id
     When I request to do DELETE operation with "<field>" to "<value>"
+    And with URI "/pet"
     And delete pet with id equal to "<idValue>"
     Then I should get <expectedStatusCode> status code
     Examples:

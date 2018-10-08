@@ -78,6 +78,11 @@ public class PetStoreDefinitions {
         restSteps.containsKey(key);
     }
 
+    @And("^with URI \"([^\"]*)\"$")
+    public void withURI(String uri){
+        restSteps.setPath(uri);
+    }
+
 //    @When("^I request to do PUT operation with \"([^\"]*)\" to \"([^\"]*)\"$")
 //    public void iRequestToDoPUTOperationWithTo(String headerField, String headerValue) {
 //        restSteps.setHeaderContentType("PUT",headerField, headerValue);
