@@ -1,7 +1,6 @@
 import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
 import java.io.*;
-
 public class Pruebas {
     public static void main (String args[]){
         try {
