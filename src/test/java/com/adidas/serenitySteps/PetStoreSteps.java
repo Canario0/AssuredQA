@@ -44,7 +44,7 @@ public class PetStoreSteps {
        this.path=path;
     }
 
-    @Step("And with body \"/requests/post/json/post_pet_<expectedStatusCode>.(json|xml)\"")
+    @Step("And with body \"/requests/(post|get|put)/json/(post|get|put)_(pet|order)_<expectedStatusCode>.(json|xml)\"")
     public void bodySend(String jsonBodyFile) {
 
         try {
@@ -69,7 +69,7 @@ public class PetStoreSteps {
         Assert.assertEquals("status code doesn't match", expectedStatusCode, res.getStatusCode());
     }
 
-    @Step("And response body equals to \"/requests/post/json/expected_post_(pet|order)_<expectedStatusCode>.(json|xml)\"")
+    @Step("And response body equals to \"/requests/(post|get|put)/json/(post|get|put)_(pet|order)_<expectedStatusCode>.(json|xml)\"")
     public void verifyBody(String expectedJsonBodyFile) {
         try {
             Response res = Serenity.sessionVariableCalled("response");
@@ -134,13 +134,21 @@ public class PetStoreSteps {
         Serenity.setSessionVariable("response").to(response);
     }
 
+    @Step
     public void getInventory(String path) {
         Response response = servicesSupport.executeRequest(spec, Serenity.sessionVariableCalled("method"), endpoint + this.path + path);
         Serenity.setSessionVariable("response").to(response);
     }
 
+    @Step
     public void containsKey(String key) {
         Response res = Serenity.sessionVariableCalled("response");
         Assert.assertTrue("The response does not contains any key equals to " + key,(new JSONObject((Map<?,?>) res.getBody().jsonPath().getJsonObject("$")).has(key)));
+    }
+
+    @Step
+    public void findOrderById(String id) {
+        Response response = servicesSupport.executeRequest(spec, Serenity.sessionVariableCalled("method"), endpoint + path + "/" + id);
+        Serenity.setSessionVariable("response").to(response);
     }
 }

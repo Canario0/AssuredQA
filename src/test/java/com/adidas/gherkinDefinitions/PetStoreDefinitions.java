@@ -83,6 +83,11 @@ public class PetStoreDefinitions {
         restSteps.setPath(uri);
     }
 
+    @And("^with id equal to \"([^\"]*)\"$")
+    public void withIdEqualTo(String id){
+        restSteps.findOrderById(id);
+    }
+
 //    @When("^I request to do PUT operation with \"([^\"]*)\" to \"([^\"]*)\"$")
 //    public void iRequestToDoPUTOperationWithTo(String headerField, String headerValue) {
 //        restSteps.setHeaderContentType("PUT",headerField, headerValue);

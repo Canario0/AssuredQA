@@ -24,3 +24,16 @@ Feature: User Cases of the Store Example
       | field        | value            | expectedStatusCode |
       | Content-Type | application/json | 200                |
       | Content-Type | application/json | 400                |
+
+  @JSON @GET
+  Scenario Outline: GET order of the store by id
+    When I request to do GET operation with "<field>" to "<value>"
+    And with URI "/store/order"
+    And with id equal to "<id>"
+    Then I should get <expectedStatusCode> status code
+#    And response body equals to "/requests/get/json/expected_get_order_<expectedStatusCode>.json"
+    Examples:
+      | field        | value            | expectedStatusCode | id        |
+      | Content-Type | application/json | 200                | 5         |
+      | Content-Type | application/json | 404                | 252525252 |
+#      | Content-Type | application/json | 404                | a         |

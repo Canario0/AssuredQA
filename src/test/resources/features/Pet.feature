@@ -18,9 +18,9 @@ Feature: User Cases of the Pet Store Example
   Scenario Outline: PUT a new pet for the store
     When I request to do PUT operation with "<field>" to "<value>"
     And with URI "/pet"
-    And with body "/requests/post/json/post_pet_<expectedStatusCode>.json"
+    And with body "/requests/put/json/put_pet_<expectedStatusCode>.json"
     Then I should get <expectedStatusCode> status code
-    And response body equals to "/requests/post/json/expected_post_pet_<expectedStatusCode>.json"
+    And response body equals to "/requests/put/json/expected_put_pet_<expectedStatusCode>.json"
     Examples:
       | field        | value            | expectedStatusCode |
       | Content-Type | application/json | 200                |
@@ -69,9 +69,9 @@ Feature: User Cases of the Pet Store Example
   Scenario Outline: PUT a new pet for the store
     When I request to do PUT operation with "<field>" to "<value>"
     And with URI "/pet"
-    And with body "/requests/post/xml/put_pet_<expectedStatusCode>.xml"
+    And with body "/requests/put/xml/put_pet_<expectedStatusCode>.xml"
     Then I should get <expectedStatusCode> status code
-    And response body equals to "/requests/post/xml/expected_put_pet_<expectedStatusCode>.xml"
+    And response body equals to "/requests/put/xml/expected_put_pet_<expectedStatusCode>.xml"
     Examples:
       | field        | value           | expectedStatusCode |
       | Content-Type | application/xml | 200                |
