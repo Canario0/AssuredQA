@@ -9,7 +9,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath("net.serenity-bdd:serenity-gradle-plugin:1.9.45")
+        classpath("net.serenity-bdd:serenity-gradle-plugin:2.0.4")
     }
 }
 
@@ -26,9 +26,9 @@ targetCompatibility = 1.8
 
 dependencies {
     compile 'net.serenity-bdd:serenity-rest-assured:1.9.45'
-    compile 'net.serenity-bdd:serenity-core:1.9.45'
+    compile 'net.serenity-bdd:serenity-core:2.0.4'
     compile 'net.serenity-bdd:serenity-junit:1.9.45'
-    compile 'net.serenity-bdd:serenity-cucumber:1.9.14'
+    compile 'net.serenity-bdd:serenity-cucumber:1.9.15'
     compile 'org.json:json:20180813'
     compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
     compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
